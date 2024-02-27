@@ -1,0 +1,197 @@
+## queries
+type Query{
+    searchPersons(personQuery : PersonQuery!) : PaginatedPersons
+}
+## inputs
+input PersonQuery{
+    and : [PersonFilter!]
+    or : [PersonFilter!]
+    orders : [PersonOrder]!
+    pageIndex : Int!
+    pageSize : Int!
+}
+input PersonFilter{
+    id : StringExpression
+    name : StringExpression
+    dateOfBirth : LocalDateExpression
+    emailVerified : BooleanExpression
+    creditScore : IntegerExpression
+    and : PersonFilter
+    or : PersonFilter
+}
+input PersonOrder{
+    id : OrderType
+    name : OrderType
+    dateOfBirth : OrderType
+    emailVerified : OrderType
+    creditScore : OrderType
+    addressPinCode : OrderType
+    addressCity : OrderType
+}
+## expressions per Java data types
+input StringExpression{
+    equals : Equals_String
+    notEquals : NotEquals_String
+    in : In_String
+    notIn : NotIn_String
+
+    isNull : IsNull
+    isNotNull : IsNotNull
+
+    like : Like
+    notLike : NotLike
+}
+input LocalDateExpression{
+    equals : Equals_LocalDate
+    notEquals : NotEquals_LocalDate
+    in : In_LocalDate
+    notIn : NotIn_LocalDate
+    greaterThan : GreaterThan_LocalDate
+    greaterThanOrEqualTo : GreaterThanOrEqualTo_LocalDate
+    lessThan : LessThan_LocalDate
+    lessThanOrEqualTo : LessThanOrEqualTo_LocalDate
+    isNull : IsNull
+    isNotNull : IsNotNull
+}
+input BooleanExpression{
+    equals : Equals_Boolean
+    notEquals : NotEquals_Boolean
+    in : In_Boolean
+    notIn : NotIn_Boolean
+    isNull : IsNull
+    isNotNull : IsNotNull
+    isTrue : IsTrue
+    isFalse : IsFalse
+}
+input IntegerExpression{
+    equals : Equals_Int
+    notEquals : NotEquals_Int
+    in : In_Int
+    notIn : NotIn_Int
+
+    greaterThan : GreaterThan_Int
+    greaterThanOrEqualTo : GreaterThanOrEqualTo_Int
+    lessThan : LessThan_Int
+    lessThanOrEqualTo : LessThanOrEqualTo_Int
+
+    isNull : IsNull
+    isNotNull : IsNotNull
+}
+## operators per Graphql data type
+## Boolean operators
+input Equals_Boolean{
+    value : Boolean
+}
+input NotEquals_Boolean{
+    value : Boolean
+}
+input In_Boolean{
+    values : [Boolean]
+}
+input NotIn_Boolean{
+    values : [Boolean]
+}
+## Int operators
+input Equals_Int{
+    value : Int
+}
+input NotEquals_Int{
+    value : Int
+}
+input In_Int{
+    values : [Int]
+}
+input NotIn_Int{
+    values : [Int]
+}
+input GreaterThan_Int{
+    value : Int
+}
+input GreaterThanOrEqualTo_Int{
+    value : Int
+}
+input LessThan_Int{
+    value : Int
+}
+input LessThanOrEqualTo_Int{
+    value : Int
+}
+## String operators
+input Equals_String{
+    value : String
+}
+input NotEquals_String{
+    value : String
+}
+input In_String{
+    values : [String]
+}
+input NotIn_String{
+    values : [String]
+}
+input Like{
+    value : String
+}
+input NotLike{
+    value : String
+}
+## LocalDate operators
+## as LocalDate is not one of GraphQL scalar data types, String
+input Equals_LocalDate{
+    value : String
+}
+input NotEquals_LocalDate{
+    value : String
+}
+input In_LocalDate{
+    values : [String]!
+}
+input NotIn_LocalDate{
+    values : [String]!
+}
+input GreaterThan_LocalDate{
+    value : String
+}
+input GreaterThanOrEqualTo_LocalDate{
+    value : String
+}
+input LessThan_LocalDate{
+    value : String
+}
+input LessThanOrEqualTo_LocalDate{
+    value : String
+}
+input IsNull{
+    value : Boolean ## dummy as graphql expects at least one field, value is not used for this operator
+}
+input IsNotNull{
+    value : Boolean ## dummy as graphql expects at least one field, value is not used for this operator
+}
+input IsTrue{
+    value : Boolean ## dummy as graphql expects at least one field, value is not used for this operator
+}
+input IsFalse{
+    value : Boolean ## dummy as graphql expects at least one field, value is not used for this operator
+}
+enum OrderType{
+    ASC, DESC
+}
+## types
+type PaginatedPersons{
+    content : [Person]
+    pageIndex : Int
+    pageSize : Int
+    totalCount : Int
+    pageCount : Int
+}
+
+type Person{
+    id : String
+    createdOn : String
+    lastModifiedOn : String
+    name : String
+    dateOfBirth : String
+    email : String
+    emailVerified : Boolean
+    creditScore : Int
+}
